@@ -1,0 +1,45 @@
+
+
+[
+    {
+        "id": "1",
+        "nome": "Cola de Cílios Castanho Escuro",
+        "descricao": "Fixação poderosa e acabamento natural Lua & Neve.",
+        "preco": 25.90,
+        "categoria": "cosmeticos",
+        "imagem": "cola-de-cilios.jpeg"
+    },
+    
+    {
+        "id": "2", 
+        "nome": "Corretivo Colorido Fix",
+        "descricao": "Disfarça manchas e neutraliza imperfeições com alta cobertura.",
+        "preco": 18.50,
+        "categoria": "cosmeticos",
+        "imagem": "Corretivo-Colorido.jpeg"
+    },
+    {
+        "id": "3",
+        "nome": "Pomada de Enxofre Lualy",
+        "descricao": "Combate acne, controla oleosidade e tem ação purificante.",
+        "preco": 32.00,
+        "categoria": "saude",
+        "imagem": "pomada-enxofre.jpeg"
+    },
+    {
+        "id": "4",
+        "nome": "Batom Matte Pink 21",
+        "descricao": "Cor intensa com 24 horas de duração e acabamento sofisticado.",
+        "preco": 22.00,
+        "categoria": "cosmeticos",
+        "imagem": "Batom-Matte.jpeg"
+    },
+    {
+        "id": "5",
+        "nome": "Kit Capilar BabaSoul",
+        "descricao": "Hidratação intensa e nutrição profunda sabor Tutti Frutti.",
+        "preco": 65.00,
+        "categoria": "cabelo",
+        "imagem": "kit-capilar-3-itens.jpeg"
+    }
+]

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizar Compra - Checkout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h2 class="mb-4 text-center">Finalizar seu Pedido</h2>
+        <div class="row">
+            <!-- Resumo do Carrinho -->
+            <div class="col-md-7 mb-4">
+                <div class="card p-3 shadow-sm">
+                    <h5>Itens no Carrinho</h5>
+                    <div id="lista-carrinho">
+                        <!-- O Rust preencherá aqui -->
+                        <p class="text-muted">Processando itens...</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Entrega e Frete -->
+            <div class="col-md-5">
+                <div class="card p-3 shadow-sm border-primary">
+                    <h5 class="text-primary">Entrega via Correios</h5>
+                    <p class="mb-1"><strong>Destino:</strong> Rua de Exemplo, 123</p>
+                    <p class="mb-1"><strong>CEP:</strong> 00000-000</p>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <span>Frete Estimado:</span>
+                        <span class="fw-bold">R$ 25,00</span>
+                    </div>
+                    <div class="d-flex justify-content-between h4 mt-3">
+                        <span>Total:</span>
+                        <span class="text-success fw-bold">R$ 0,00</span>
+                    </div>
+                    <button class="btn btn-warning w-100 mt-3 fw-bold">Pagar via PIX (WhatsApp)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

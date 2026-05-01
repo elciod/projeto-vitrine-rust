@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro - Vitrine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm" style="border-radius: 12px;">
+                    <h3 class="text-center mb-4">Criar sua Conta</h3>
+                    <form action="/cadastro" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" name="nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">CEP (Para Frete)</label>
+                                <input type="text" class="form-control" name="cep" placeholder="00000-000" required>
+                            </div>
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label">Endereço Completo</label>
+                                <input type="text" class="form-control" name="endereco" placeholder="Rua, número, bairro..." required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Senha</label>
+                            <input type="password" class="form-control" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Finalizar e Ir para Compra</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
