@@ -54,4 +54,3 @@ Plaintext
 └── Cargo.toml       # Gerenciador de dependências e features (Serde/Derive)
 
 codigo foi enviado para git
-
