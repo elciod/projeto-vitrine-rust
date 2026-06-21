@@ -4,25 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-
-actix-web = "4"
-# Certifique-se de que a linha abaixo tenha o 'features = ["derive"]'
 serde = { version = "1.0", features = ["derive"] } 
 serde_json = "1.0"
 tera = "1"
 actix-files = "0.6"
+actix-web = "4.13.0"
 
 
-
-
-#actix-files = "0.6"
-#actix-web = "4.13.0"
-#serde = { version = "1.0.228", features = ["derive"] }
-#serde_json = "1.0.149"
-#tera = "1.20.1"
-#serde = "1.0.228" 
-#actix-http = "0.2.11"
-#actix-files = { version = "0.6.0-rc" }
 
 
 

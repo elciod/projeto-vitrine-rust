@@ -52,3 +52,6 @@ Plaintext
 │   └── main.rs      # Lógica central, handlers e roteamento
 ├── produtos.json    # Banco de dados temporário de produtos
 └── Cargo.toml       # Gerenciador de dependências e features (Serde/Derive)
+
+codigo foi enviado para git
+

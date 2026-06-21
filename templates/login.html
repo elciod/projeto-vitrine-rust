@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,6 +8,7 @@
     <title>Login - Vitrine</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
     <div class="container vh-100 d-flex justify-content-center align-items-center">
         <div class="card p-4 shadow" style="width: 400px; border-radius: 15px;">
@@ -13,8 +16,19 @@
                 <h3 class="fw-bold">Identifique-se</h3>
                 <span class="badge bg-info text-dark">Passo 1 de 3</span>
             </div>
+
+
+            <!-- BLOCO DE ERRO DINÂMICO DO RUST  novo codigo -- Erro: E-mail ou senha não cadastrados ou incorretos. --> 
+            {% if erro %}
+            <div class="alert alert-danger py-2 small shadow-sm" role="alert">
+                <strong>Erro:</strong> {{ erro }}
+            </div>
+            {% endif %}
             
-            <div class="alert alert-warning py-2 small" role="alert">
+     ------------------------------------ novo ajuste a cima --------------
+            
+    
+    <div class="alert alert-warning py-2 small" role="alert">
                 Atenção: Seu endereço de entrega será carregado automaticamente após o login.
             </div>
 

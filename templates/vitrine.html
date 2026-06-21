@@ -1,145 +1,78 @@
-
-
-
-<!---
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>PROJETO VITRINE</title>
-    
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
-<body>
-    <h1>Vitrine Multissegmento</h1>
-
-    <div class="vitrine-container">
-        {% for produto in produtos %}
-        <div class="produto-card">
-            
-            <img src= " static/Batom-Matte.jpeg produto.imagem " alt ="{{ produto.nome }}">
-            <img src = "static/cola-de-cilios.jpeg produto.imgem ">
-            
-        <span> class="categoria">{{ produto.categoria }}</span>
-            
-            <h3>{{ produto.nome }}</h3>
-            <p>{{ produto.descricao }}</p>
-            <p class="preco">R$ {{ produto.preco }}</p>
-            <button>Ver mais</button>
-        </div>
-        {% endfor %}
-    </div>
-
-    <footer>
-        © 2026 - Sistema Escalável em Rust
-    </footer>
-</body>
-</html>
-
-versão corrigida a baixo  codigo funcinado carreagados as imagens
-
-
-
-
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>PROJETO VITRINE</title>
-    
-    <link rel="stylesheet" href="/static/styles.css"> 
-    <link rel="stylesheet" type="text/css" href="/static/styles.css">
-</head>
-<body>
-    <h1>Vitrine Multissegmento</h1>
-
-    <div class="vitrine-container">
-        {% for produto in produtos %}
-        <div class="produto-card">
-            
-        <img src="/static/Batom-Matte.jpeg {{produto.imagem }}" alt="{{ produto.nome }}"> 
-            
-            
-            <img src="/static/batom-matte.jpeg " alt="{{ produto.nome }}"> 
-            <img src="/static/pomada-enxofre.jpeg " alt="{{ produto.nome }}">
-            <img src="/static/cola-de-cilios.jpeg " alt="{{ produto.nome }}">
-            <img src="/static/Corretivo-Colorido.jpeg " alt="{{ produto.nome }}">
-            <img src="/static/kit capilar 3 itens.jpeg " alt="{{ produto.nome }}">
-            
-            <span class="categoria-tag">{{ produto.categoria }}</span>
-
-    
-            
-            <h3>{{ produto.nome }}</h3>
-            <p>{{ produto.descricao }}</p>
-            <p class="preco">R$ {{ produto.preco }}</p>
-            <button>Ver mais</button>
-        </div>
-    {% endfor %} 
-    </div>
-
-    <footer>
-        © 2026 - Sistema Escalável em Rust
-    </footer>
-</body>
-</html>
-
-
- novo ajuste -->
-
-
- <!DOCTYPE html>
-<html lang="pt-br">
-
-<!--
-<head>
-    <meta charset="UTF-8">
-    <title>PROJETO VITRINE</title>
-    <link rel="stylesheet" type="text/css" href="/static/styles.css">
-</head>
-
-
--->
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>PROJETO VITRINE</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+
+    <!-- CSS próprio -->
+    <!-- <link rel="stylesheet" href="/static/styles.css"> -->
 </head>
 
-
 <body>
-    <h1>Vitrine Multissegmento</h1>
 
-    <div class="vitrine-container">
-    <!-- <div class="produtos-container"></div> -->
-        {% for produto in produtos %}
-        <div class="produto-card">
-            
-            <!-- APENAS UMA TAG DE IMAGEM DINÂMICA -->
-            <!-- Ela vai usar o nome que estiver no seu banco de dados/JSON -->
-            <img src="/static/{{ produto.imagem }}" alt="{{ produto.nome }}"> 
-            
-            <span class="categoria-tag">{{ produto.categoria }}</span>
-            
-            <h3>{{ produto.nome }}</h3>
-            <p>{{ produto.descricao }}</p>
-            <p class="preco">R$ {{ produto.preco }}</p>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Vitrine Multissegmento</h1>
 
-            <div class="d-grid gap-2">
-            <a href="/login" class="btn btn-primary fw-bold">Comprar Agora</a>
-       
+        <div class="row">
+
+            {% for produto in produtos %}
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+
+                    <img
+                        src="/static/img/batom-matte.jpeg"
+                        class="card-img-top p-3"
+                        style="height: 200px; object-fit: contain;"
+                        alt="{{ produto.nome }}"
+                    >
+
+                    <div class="card-body">
+
+                        <span class="badge bg-secondary mb-2">
+                            {{ produto.categoria }}
+                        </span>
+
+                        <h5 class="card-title">
+                            {{ produto.nome }}
+                        </h5>
+
+                        <p class="card-text">
+                            {{ produto.descricao }}
+                        </p>
+
+                        <h4 class="text-success">
+                            R$ {{ produto.preco }}
+                        </h4>
+
+                    </div>
+
+                    <div class="card-footer bg-white border-0">
+                        <div class="d-grid">
+                            <a href="/login" class="btn btn-primary fw-bold">
+                                Comprar Agora
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {% endfor %}
+
         </div>
-            
-        </div>
-        
-        {% endfor %} 
     </div>
 
-    <footer>
+    <footer class="text-center mt-5 mb-3">
         © 2026 - Sistema Escalável em Rust
     </footer>
+
 </body>
+
 </html>

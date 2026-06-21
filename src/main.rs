@@ -3,8 +3,6 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use tera::{Context, Tera};
 
-// --- BLOCO DE ESTRUTURAS ÚNICO (PRESERVAÇÃO E LIMPEZA) ---
-
 #[derive(Serialize, Deserialize, Clone)]
 struct Produto {
     id: String,
@@ -29,51 +27,89 @@ pub struct DadosLogin {
 }
 
 #[derive(Deserialize)]
+pub struct CadastroForm {
+    pub nome: String,
+    pub email: String,
 
+    pub password: String,
+    pub password_confirm: String,
 
-#[allow(dead_code)]
-struct DadosCadastro {
-    nome: String,
-    email: String,
-    cep: String,
-    endereco: String,
-    password: String,
+    pub cep: String,
+    pub rua: String,
+    pub numero: String,
+    pub complemento: Option<String>,
+
+    pub referencia: Option<String>,
+
+    pub cidade: String,
+    pub estado: String,
 }
 
-// --- FUNÇÕES DE PROCESSAMENTO (HANDLERS) ---
+//-----------------------------------------------------------------
 
-async fn validar_login(form: web::Form<DadosLogin>) -> impl Responder {
-    let email_digitado = form.email.to_lowercase();
-    let senha_digitada = &form.password;
+#[derive(serde::Serialize)]
+#[allow(dead_code)]
+struct AlertaContext {
+    mensagem: String,
+}
 
-    println!("Monitoramento: Tentativa de login com {}", email_digitado);
+async fn validar_login(form: web::Form<DadosLogin>, tmpl: web::Data<tera::Tera>) -> impl Responder {
+    let email_valido = "tom_email@teste.com";
+    let senha_valida = "123456";
 
-    if (email_digitado == "user@teste.com" || email_digitado == "user@reste.com")
-        && senha_digitada == "123456"
-    {
-        println!("Sucesso: Credenciais válidas.");
-        HttpResponse::SeeOther()
-            .append_header(("Location", "/checkout"))
+    let email_digitado = form.email.trim().to_lowercase();
+
+    if email_digitado == email_valido && form.password == senha_valida {
+        println!("Login realizado com sucesso para: {}", email_digitado);
+
+        HttpResponse::Found()
+            .append_header(("Location", "/checkout")) //dashboard
             .finish()
     } else {
-        HttpResponse::Ok().body("Login ou Senha incorretos. Por favor, tente novamente.")
+        println!("Falha: Usuário ou senha não coincidem.");
+
+        let mut ctx = tera::Context::new();
+        ctx.insert("erro", "E-mail ou senha não cadastrados ou incorretos.");
+
+        match tmpl.render("login.html", &ctx) {
+            Ok(html) => HttpResponse::Ok().content_type("text/html").body(html),
+            Err(_) => HttpResponse::InternalServerError().body("Erro no servidor"),
+        }
     }
 }
 
-async fn processar_cadastro(form: web::Form<DadosCadastro>) -> impl Responder {
-    println!("--- Novo Cadastro Recebido: {} ---", form.nome);
-    HttpResponse::SeeOther()
-        .append_header(("Location", "/checkout"))
+async fn processar_cadastro(
+    form: web::Form<CadastroForm>,
+    _tmpl: web::Data<tera::Tera>,
+) -> impl Responder {
+    println!("--- Novo Cadastro Recebido ---");
+    println!("Usuário: {}", form.nome);
+    println!("E-mail: {}", form.email);
+    println!(
+        "Endereço: {}, Nº {}, CEP: {}",
+        form.rua, form.numero, form.cep
+    );
+
+    println!("Referência: {:?}", form.referencia);
+
+    println!("Localidade: {}/{}", form.cidade, form.estado);
+
+    println!("------------------------------");
+
+    let mut ctx = tera::Context::new();
+    ctx.insert(
+        "mensagem_sucesso",
+        &format!("Cadastro de {} realizado com sucesso!", form.nome),
+    );
+
+    actix_web::HttpResponse::Found()
+        .append_header(("Location", "/login"))
         .finish()
 }
-
-// --- LÓGICA DO CARRINHO ---
 
 async fn adicionar_ao_carrinho(path: web::Path<u32>) -> impl Responder {
     let id_produto = path.into_inner();
     println!("Log: Adicionando item ID {} ao sistema", id_produto);
-
-    // Futura integração com SQLx/SQLite aqui
 
     HttpResponse::SeeOther()
         .append_header(("Location", "/checkout"))
@@ -88,8 +124,6 @@ async fn remover_item_carrinho(path: web::Path<u32>) -> impl Responder {
         .append_header(("Location", "/checkout"))
         .finish()
 }
-
-// --- TELAS E RENDERIZAÇÃO ---
 
 async fn exibir_vitrine(tmpl: web::Data<Tera>) -> impl Responder {
     let data = fs::read_to_string("produtos.json").expect("Erro ao ler produtos.json");
@@ -107,15 +141,21 @@ async fn tela_login(tmpl: web::Data<Tera>) -> impl Responder {
     HttpResponse::Ok().content_type("text/html").body(rendered)
 }
 
-async fn tela_cadastro(tmpl: web::Data<Tera>) -> impl Responder {
-    let rendered = tmpl.render("cadastro.html", &Context::new()).unwrap();
-    HttpResponse::Ok().content_type("text/html").body(rendered)
+async fn tela_cadastro(tmpl: web::Data<tera::Tera>) -> impl Responder {
+    let ctx = tera::Context::new(); // Prepara o terreno para mensagens de erro
+
+    match tmpl.render("cadastro.html", &ctx) {
+        Ok(html) => HttpResponse::Ok().content_type("text/html").body(html),
+        Err(e) => {
+            println!("Erro ao carregar cadastro.html: {}", e);
+            HttpResponse::InternalServerError().body("Erro ao carregar a página")
+        }
+    }
 }
 
 async fn tela_checkout(tera: web::Data<Tera>) -> impl Responder {
     let mut context = Context::new();
 
-    // Mock de dados para teste do layout
     context.insert("produto_nome", "Equipamento de Teste");
     context.insert("endereco_usuario", "Rua de Exemplo, 123");
     context.insert("cep_usuario", "00000-000");
@@ -127,8 +167,6 @@ async fn tela_checkout(tera: web::Data<Tera>) -> impl Responder {
         Err(_) => HttpResponse::InternalServerError().body("Erro ao carregar checkout"),
     }
 }
-
-// --- CONFIGURAÇÃO DO SERVIDOR ---
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -146,10 +184,8 @@ async fn main() -> std::io::Result<()> {
             .route("/cadastro", web::get().to(tela_cadastro))
             .route("/cadastro", web::post().to(processar_cadastro))
             .route("/checkout", web::get().to(tela_checkout))
-            // Novas rotas de ação do carrinho
             .route("/adicionar/{id}", web::get().to(adicionar_ao_carrinho))
             .route("/remover/{id}", web::get().to(remover_item_carrinho))
-            // Arquivos estáticos
             .service(actix_files::Files::new("/static", "static").show_files_listing())
     })
     .bind("127.0.0.1:8080")?
